@@ -226,10 +226,10 @@ data/raw/uk_retail_categories.csv
 jupyter notebook notebooks/01_data_cleaning.ipynb
 
 # 2. Create the PostgreSQL schema
-psql -d your_database -f database/schema.sql
+psql -d your_database -f database/schema.database
 
 # 3. Load processed data into PostgreSQL
-psql -d your_database -f database/load.sql
+psql -d your_database -f database/load.database
 
 # 4. Explore the data
 jupyter notebook notebooks/02_eda.ipynb
