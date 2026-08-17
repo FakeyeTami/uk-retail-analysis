@@ -27,7 +27,7 @@
 
 ---
 
-## 📸 Preview
+## Preview
 
 <div align="center">
   <img src="./visuals/exports/volume_trend.png" alt="UK retail volume trend 1988–2026" width="100%">
@@ -41,7 +41,13 @@
 
 ---
 
-## 🎯 The Business Questions
+## Objective 
+
+The UK Office for National Statistics publishes retail sales data across volume and value dimensions, broken down by retail category from 1988 to the present. The raw data is split across multiple worksheets and index series. This project loads, cleans, and integrates three source tables into a PostgreSQL star schema, then answers six business questions through SQL queries, Python analysis, and a Power BI dashboard.
+
+---
+
+## The Business Questions
 
 The UK Office for National Statistics publishes retail sales data across volume and value dimensions, broken down by retail category from 1988 to the present. The raw data is split across multiple worksheets and index series. This project loads, cleans, and integrates three source tables into a PostgreSQL star schema, then answers six business questions through SQL queries, Python analysis, and a Power BI dashboard.
 
@@ -49,7 +55,7 @@ The UK Office for National Statistics publishes retail sales data across volume 
 
 ## Business Questions Answered
 
-### Task 1 — SQL analysis
+### SQL analysis
 
 | # | Question | SQL technique |
 |---|---|---|
@@ -60,7 +66,7 @@ The UK Office for National Statistics publishes retail sales data across volume 
 | 5 | Which categories have grown the most? | Growth rate calculation, RANK() / DENSE_RANK() |
 | 6 | How does sales value growth compare with volume growth — and what does the gap reveal? | Dual-series join, divergence calculation |
 
-### Task 2 — Visualisation
+### Visualisation
 
 Six charts and a two-page Power BI dashboard communicating findings to a non-technical audience:
 
@@ -97,28 +103,28 @@ uk-retail-analysis/
 │   ├── raw/                              // original ONS CSVs — never modified
 │   │   ├── uk_retail_volume_monthly.csv  // Table 1 M — chained volume index
 │   │   ├── uk_retail_value_monthly.csv   // Table 2 M — value at current prices
-│   │   └── uk_retail_categories.csv      // Table 5 — category metadata and weights
+│   │   └── uk_retail_commodity.csv      // Table 5 — category metadata and weights
 │   │
 │   └── processed/                        // cleaned outputs from 01_data_cleaning.ipynb
-│       ├── retail_volume_clean.csv
-│       ├── retail_value_clean.csv
-│       └── retail_categories_clean.csv
+│       ├── retail_volume_monthly.csv
+│       ├── retail_value_monthly.csv
+│       └── retail_categories.csv
 │
 ├── database/
 │   ├── schema.sql                        // CREATE TABLE statements — star schema
 │   ├── load.sql                          // COPY commands to load processed CSVs
 │   └── queries/
-│       ├── 01_volume_trend_1988_2026.sql
-│       ├── 02_value_trend_over_time.sql
-│       ├── 03_2025_2026_vs_2023.sql
-│       ├── 04_category_value_contribution.sql
-│       ├── 05_category_growth_ranking.sql
-│       └── 06_value_vs_volume_divergence.sql
+│       ├── volume_trend_1988_2026.sql
+│       ├── value_trend_over_time.sql
+│       ├── 2025_2026_vs_2023.sql
+│       ├── category_value_contribution.sql
+│       ├── category_growth_ranking.sql
+│       └── value_vs_volume_divergence.sql
 │
 ├── notebooks/
-│   ├── 01_data_cleaning.ipynb            // raw → processed; every decision documented
-│   ├── 02_eda.ipynb                      // exploratory charts and anomaly detection
-│   └── 03_analysis.ipynb                 // answers all six business questions with charts
+│   ├── data_cleaning.ipynb            // raw → processed; every decision documented
+│   ├── eda.ipynb                      // exploratory charts and anomaly detection
+│   └── analysis.ipynb                 // answers all six business questions with charts
 │
 ├── visuals/
 │   └── exports/
@@ -145,32 +151,13 @@ uk-retail-analysis/
 
 Three ONS source files integrated into a PostgreSQL star schema:
 
-```text
-ONS source files
-  uk_retail_volume_monthly.csv  ──→  retail_volume_monthly (fact)
-  uk_retail_value_monthly.csv   ──→  retail_value_monthly  (fact)
-  uk_retail_categories.csv      ──→  retail_category       (dimension)
-
-Star schema
-  dim_date            ──┬──→  retail_volume_monthly
-  (date_id, year,       │     (date_id, category_id, volume_index)
-   quarter, month)      │
-                        └──→  retail_value_monthly
-                              (date_id, category_id, sales_value)
-
-  retail_category ──────────→  retail_volume_monthly
-  (category_id,                retail_value_monthly
-   category_name,
-   dataset_code,
-   percentage_weight,
-   sales_2023)
-```
+![Data Model](public/uk_retail_analytics_data_model.png)
 
 ---
 
 ## Data Cleaning Steps
 
-All cleaning decisions are documented in `01_data_cleaning.ipynb` with a markdown cell explaining the decision and its impact on row counts.
+All cleaning decisions are documented in `data_cleaning.ipynb` with a markdown cell explaining the decision and its impact on row counts.
 
 | Step                           | Source              | Action                                       | Reason                                                |
 | ------------------------------ | ------------------- | -------------------------------------------- | ----------------------------------------------------- |
@@ -216,14 +203,14 @@ Expected files:
 ```text
 data/raw/uk_retail_volume_monthly.csv
 data/raw/uk_retail_value_monthly.csv
-data/raw/uk_retail_categories.csv
+data/raw/uk_retail_commodity.csv
 ```
 
 ### 4. Run in order
 
 ```bash
 # 1. Clean the raw data
-jupyter notebook notebooks/01_data_cleaning.ipynb
+jupyter notebook notebooks/data_cleaning.ipynb
 
 # 2. Create the PostgreSQL schema
 psql -d your_database -f database/schema.database
@@ -232,10 +219,10 @@ psql -d your_database -f database/schema.database
 psql -d your_database -f database/load.database
 
 # 4. Explore the data
-jupyter notebook notebooks/02_eda.ipynb
+jupyter notebook notebooks/eda.ipynb
 
 # 5. Run the full analysis
-jupyter notebook notebooks/03_analysis.ipynb
+jupyter notebook notebooks/analysis.ipynb
 ```
 
 ### 5. Open the Power BI dashboard
@@ -249,7 +236,7 @@ Open `powerbi/uk_retail_dashboard.pbix` in Power BI Desktop. Update the PostgreS
 ```
 Load (3 ONS CSV files — raw, untouched)
 
-Clean (01_data_cleaning.ipynb)
+Clean (data_cleaning.ipynb)
   · Skip ONS metadata header rows
   · Melt wide format → long format (one row per category per month)
   · Handle ONS ".." suppression markers
@@ -258,16 +245,16 @@ Clean (01_data_cleaning.ipynb)
   · Save to data/processed/
 
 Load to PostgreSQL (schema.sql → load.sql)
-  · dim_date and retail_category loaded first (dimensions)
+  · retail_category loaded first (dimensions)
   · retail_volume_monthly and retail_value_monthly loaded second (facts)
   · Row counts verified after each table load
 
-Explore (02_eda.ipynb)
+Explore (eda.ipynb)
   · Full time series plots — verify COVID dip, crisis events visible
   · Value vs volume plotted together — divergence visible pre-analysis
   · Anomaly check — flag any unexpected breaks in the series
 
-Analyse (03_analysis.ipynb + database/queries/)
+Analyse (analysis.ipynb + database/queries/)
   · Six SQL queries — one per business question
   · Python pulls query results into Pandas for charting
   · Six charts exported to visuals/exports/
