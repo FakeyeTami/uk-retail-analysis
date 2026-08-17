@@ -30,13 +30,13 @@
 ## Preview
 
 <div align="center">
-  <img src="./visuals/exports/volume_trend.png" alt="UK retail volume trend 1988–2026" width="100%">
+  <img src="../visuals/exports/volume_trend.png" alt="UK retail volume trend 1988–2026" width="100%">
   <br><br>
-  <img src="./visuals/exports/value_vs_volume.png" alt="Value vs volume divergence — inflation visible" width="100%">
+  <img src="../visuals/exports/value_vs_volume.png" alt="Value vs volume divergence" width="100%">
   <br><br>
-  <img src="./visuals/exports/category_contribution.png" alt="Retail sales value by category" width="100%">
+  <img src="../visuals/exports/category_contribution.png" alt="Retail sales value by category" width="100%">
   <br><br>
-  <img src="./powerbi/screenshots/overview_page.png" alt="Power BI executive summary dashboard" width="100%">
+  <img src="../powerbi/screenshots/overview_page.png" alt="Power BI executive summary dashboard" width="100%">
 </div>
 
 ---
@@ -61,7 +61,7 @@ The UK Office for National Statistics publishes retail sales data across volume 
 |---|---|---|
 | 1 | How has UK retail sales volume changed from 1988 to 2026? | Time series aggregation, annual GROUP BY |
 | 2 | How has the value of UK retail sales changed over the same period? | Time series aggregation, joined to dim_date |
-| 3 | How did retail performance in 2025/2026 compare with 2023? | Filtered comparison, percentage change calculation |
+| 3 | How did retail performance in 2025 compare with 2023? | Filtered comparison, percentage change calculation |
 | 4 | Which retail categories contribute the most sales value? | Window functions, percentage of total |
 | 5 | Which categories have grown the most? | Growth rate calculation, RANK() / DENSE_RANK() |
 | 6 | How does sales value growth compare with volume growth — and what does the gap reveal? | Dual-series join, divergence calculation |
@@ -103,7 +103,7 @@ uk-retail-analysis/
 │   ├── raw/                              // original ONS CSVs — never modified
 │   │   ├── uk_retail_volume_monthly.csv  // Table 1 M — chained volume index
 │   │   ├── uk_retail_value_monthly.csv   // Table 2 M — value at current prices
-│   │   └── uk_retail_commodity.csv      // Table 5 — category metadata and weights
+│   │   └── uk_retail_commodity.csv       // Table 5 — category metadata and weights
 │   │
 │   └── processed/                        // cleaned outputs from 01_data_cleaning.ipynb
 │       ├── retail_volume_monthly.csv
@@ -116,7 +116,7 @@ uk-retail-analysis/
 │   └── queries/
 │       ├── volume_trend_1988_2026.sql
 │       ├── value_trend_over_time.sql
-│       ├── 2025_2026_vs_2023.sql
+│       ├── 2025_vs_2023.sql
 │       ├── category_value_contribution.sql
 │       ├── category_growth_ranking.sql
 │       └── value_vs_volume_divergence.sql
