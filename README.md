@@ -18,10 +18,10 @@
 
   <br>
 
-  ![GitHub last commit](https://img.shields.io/github/last-commit/FakeyeTami/uk-retail-analysis?style=for-the-badge&labelColor=%23000&color=%234770FF)
-  ![License](https://img.shields.io/github/license/FakeyeTami/uk-retail-analysis?style=for-the-badge&labelColor=%23000&color=%234770FF)
-  ![Python](https://img.shields.io/badge/Python-3.10-4770FF?style=for-the-badge&labelColor=000)
-  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4770FF?style=for-the-badge&labelColor=000)
+![GitHub last commit](https://img.shields.io/github/last-commit/FakeyeTami/uk-retail-analysis?style=for-the-badge\&labelColor=%23000\&color=%234770FF)
+![License](https://img.shields.io/github/license/FakeyeTami/uk-retail-analysis?style=for-the-badge\&labelColor=%23000\&color=%234770FF)
+![Python](https://img.shields.io/badge/Python-3.10-4770FF?style=for-the-badge\&labelColor=000)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4770FF?style=for-the-badge\&labelColor=000)
 
 </div>
 
@@ -30,26 +30,26 @@
 ## Preview
 
 <div align="center">
-  <img src="../visuals/exports/volume_trend.png" alt="UK retail volume trend 1988–2026" width="100%">
+  <img src="visuals/exports/volume_trend.png" alt="UK retail volume trend 1988–2026" width="100%">
   <br><br>
-  <img src="../visuals/exports/value_vs_volume.png" alt="Value vs volume divergence" width="100%">
+  <img src="visuals/exports/value_vs_volume.png" alt="Value vs volume divergence" width="100%">
   <br><br>
-  <img src="../visuals/exports/category_contribution.png" alt="Retail sales value by category" width="100%">
+  <img src="visuals/exports/category_contribution.png" alt="Retail sales value by category" width="100%">
   <br><br>
-  <img src="../powerbi/screenshots/overview_page.png" alt="Power BI executive summary dashboard" width="100%">
+  <img src="powerbi/screenshots/overview_page.png" alt="Power BI executive summary dashboard" width="100%">
 </div>
 
 ---
 
-## Objective 
+## Objective
 
-The UK Office for National Statistics publishes retail sales data across volume and value dimensions, broken down by retail category from 1988 to the present. The raw data is split across multiple worksheets and index series. This project loads, cleans, and integrates three source tables into a PostgreSQL star schema, then answers six business questions through SQL queries, Python analysis, and a Power BI dashboard.
+The UK Office for National Statistics publishes retail sales data across volume and value dimensions, broken down by retail category from 1988 to the present. The raw data is split across multiple worksheets and index series. This project loads, cleans, and integrates three source tables into PostgreSQL, then answers six business questions through SQL queries, Python analysis, and a Power BI dashboard.
 
 ---
 
 ## The Business Questions
 
-The UK Office for National Statistics publishes retail sales data across volume and value dimensions, broken down by retail category from 1988 to the present. The raw data is split across multiple worksheets and index series. This project loads, cleans, and integrates three source tables into a PostgreSQL star schema, then answers six business questions through SQL queries, Python analysis, and a Power BI dashboard.
+The UK Office for National Statistics publishes retail sales data across volume and value dimensions, broken down by retail category from 1988 to the present. The raw data is split across multiple worksheets and index series. This project loads, cleans, and integrates three source tables into PostgreSQL, then answers six business questions through SQL queries, Python analysis, and a Power BI dashboard.
 
 ---
 
@@ -57,25 +57,25 @@ The UK Office for National Statistics publishes retail sales data across volume 
 
 ### SQL analysis
 
-| # | Question | SQL technique |
-|---|---|---|
-| 1 | How has UK retail sales volume changed from 1988 to 2026? | Time series aggregation, annual GROUP BY |
-| 2 | How has the value of UK retail sales changed over the same period? | Time series aggregation, joined to dim_date |
-| 3 | How did retail performance in 2025 compare with 2023? | Filtered comparison, percentage change calculation |
-| 4 | Which retail categories contribute the most sales value? | Window functions, percentage of total |
-| 5 | Which categories have grown the most? | Growth rate calculation, RANK() / DENSE_RANK() |
-| 6 | How does sales value growth compare with volume growth — and what does the gap reveal? | Dual-series join, divergence calculation |
+| # | Question                                                                               | SQL technique                                      |
+| - | -------------------------------------------------------------------------------------- | -------------------------------------------------- |
+| 1 | How has UK retail sales volume changed from 1988 to 2026?                              | Time series aggregation, annual GROUP BY           |
+| 2 | How has the value of UK retail sales changed over the same period?                     | Time series aggregation                            |
+| 3 | How did retail performance in 2025 compare with 2023?                                  | Filtered comparison, percentage change calculation |
+| 4 | Which retail categories contribute the most sales value?                               | Window functions, percentage of total              |
+| 5 | Which categories have grown the most?                                                  | Growth rate calculation, RANK()                    |
+| 6 | How does sales value growth compare with volume growth — and what does the gap reveal? | Dual-series join, divergence calculation           |
 
 ### Visualisation
 
 Six charts and a two-page Power BI dashboard communicating findings to a non-technical audience:
 
-1. **UK retail volume trend (1988–2026)** — line chart with annotated events (financial crisis, COVID, cost-of-living)
-2. **UK retail value trend (1988–2026)** — overlaid on volume to show nominal growth
-3. **2025/2026 vs 2023 comparison** — grouped bar chart by category
-4. **Category contribution to total sales value** — horizontal bar chart sorted descending
-5. **Category growth ranking** — bar chart sorted by compound growth rate
-6. **Value vs volume divergence** — dual-axis line chart showing widening inflation gap
+1. **UK retail volume trend (1988–2026)** — line chart with annual volume index
+2. **UK retail value trend (1988–2026)** — line chart showing annual sales value
+3. **2025 vs 2023 comparison** — grouped/bar comparison of retail sales value
+4. **Category contribution to total sales value** — horizontal bar chart sorted by category share
+5. **Category growth ranking** — bar chart sorted by growth percentage
+6. **Value vs volume divergence** — scatter plot comparing sales value and volume index
 
 ---
 
@@ -83,12 +83,12 @@ Six charts and a two-page Power BI dashboard communicating findings to a non-tec
 
 <div align="center">
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-&nbsp;![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
-&nbsp;![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-&nbsp;![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
-&nbsp;![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge)
-&nbsp;![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge\&logo=python\&logoColor=white)
+ ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge\&logo=pandas\&logoColor=white)
+ ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge\&logo=postgresql\&logoColor=white)
+ ![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge\&logo=powerbi\&logoColor=black)
+ ![Seaborn](https://img.shields.io/badge/Seaborn-4C72B0?style=for-the-badge)
+ ![Matplotlib](https://img.shields.io/badge/Matplotlib-11557c?style=for-the-badge)
 
 </div>
 
@@ -105,13 +105,13 @@ uk-retail-analysis/
 │   │   ├── uk_retail_value_monthly.csv   // Table 2 M — value at current prices
 │   │   └── uk_retail_commodity.csv       // Table 5 — category metadata and weights
 │   │
-│   └── processed/                        // cleaned outputs from 01_data_cleaning.ipynb
+│   └── processed/                        // cleaned outputs from data_cleaning.ipynb
 │       ├── retail_volume_monthly.csv
 │       ├── retail_value_monthly.csv
 │       └── retail_categories.csv
 │
 ├── database/
-│   ├── schema.sql                        // CREATE TABLE statements — star schema
+│   ├── schema.sql                        // CREATE TABLE statements
 │   ├── load.sql                          // COPY commands to load processed CSVs
 │   └── queries/
 │       ├── volume_trend_1988_2026.sql
@@ -143,15 +143,17 @@ uk-retail-analysis/
 │
 ├── requirements.txt
 └── README.md
-````
+```
 
 ---
 
 ## Data Model
 
-Three ONS source files integrated into a PostgreSQL star schema:
+Three ONS source files integrated into a PostgreSQL relational model:
 
 ![Data Model](public/uk_retail_analytics_data_model.png)
+
+The PostgreSQL tables are connected through category relationships and are used as the source for the SQL analysis and Power BI model.
 
 ---
 
@@ -162,7 +164,7 @@ All cleaning decisions are documented in `data_cleaning.ipynb` with a markdown c
 | Step                           | Source              | Action                                       | Reason                                                |
 | ------------------------------ | ------------------- | -------------------------------------------- | ----------------------------------------------------- |
 | Metadata rows skipped          | All files           | `skiprows` on CSV read                       | ONS files contain publication headers above the data  |
-| Wide → long format (melt)      | Volume, value files | Unpivot category columns into rows           | Source is wide format; schema requires long format    |
+| Wide → long format (melt)      | Volume, value files | Unpivot category columns into rows           | Source is wide format; analysis requires long format  |
 | ONS `..` markers handled       | Volume, value files | Replaced with `NaN`, documented count        | ONS uses `..` for suppressed or unavailable data      |
 | Date parsed to standard format | Volume, value files | Standardised to `YYYY-MM`                    | Enables reliable date arithmetic in SQL and Power BI  |
 | Category codes validated       | Categories file     | Cross-checked against column headers         | Mismatches would cause foreign key violations on load |
@@ -213,10 +215,10 @@ data/raw/uk_retail_commodity.csv
 jupyter notebook notebooks/data_cleaning.ipynb
 
 # 2. Create the PostgreSQL schema
-psql -d your_database -f database/schema.database
+psql -d your_database -f database/schema.sql
 
 # 3. Load processed data into PostgreSQL
-psql -d your_database -f database/load.database
+psql -d your_database -f database/load.sql
 
 # 4. Explore the data
 jupyter notebook notebooks/eda.ipynb
@@ -233,7 +235,7 @@ Open `powerbi/uk_retail_dashboard.pbix` in Power BI Desktop. Update the PostgreS
 
 ## Pipeline
 
-```
+```text
 Load (3 ONS CSV files — raw, untouched)
 
 Clean (data_cleaning.ipynb)
@@ -245,37 +247,44 @@ Clean (data_cleaning.ipynb)
   · Save to data/processed/
 
 Load to PostgreSQL (schema.sql → load.sql)
-  · retail_category loaded first (dimensions)
-  · retail_volume_monthly and retail_value_monthly loaded second (facts)
+  · retail_category loaded first
+  · retail_volume_monthly and retail_value_monthly loaded second
   · Row counts verified after each table load
 
 Explore (eda.ipynb)
-  · Full time series plots — verify COVID dip, crisis events visible
-  · Value vs volume plotted together — divergence visible pre-analysis
-  · Anomaly check — flag any unexpected breaks in the series
+  · Full time series plots
+  · Value vs volume comparison
+  · Missing-value checks
+  · Anomaly detection
+  · Initial exploratory analysis
 
 Analyse (analysis.ipynb + database/queries/)
   · Six SQL queries — one per business question
-  · Python pulls query results into Pandas for charting
+  · Python reads SQL files from database/queries/
+  · Query results loaded into Pandas
   · Six charts exported to visuals/exports/
 
 Visualise (Power BI)
-  · Star schema imported from PostgreSQL
-  · DAX measures: average price, YoY change, category share, growth index
-  · Two report pages: executive summary and category drill-down
-  · Exported to powerbi/screenshots/
+  · PostgreSQL database connected to Power BI
+  · Relationships established between tables
+  · DAX measures created for dashboard analysis
+  · Two report pages: executive summary and category analysis
+  · Exported screenshots saved to powerbi/screenshots/
 ```
 
 ---
 
 ## Key Concepts
 
-* Star schema design with fact and dimension tables in PostgreSQL
+* Relational data modelling with PostgreSQL
 * ONS data cleaning — handling metadata rows, wide-to-long transformation, suppression markers
 * Window functions for percentage-of-total and growth ranking in SQL
 * Dual-series analysis: separating volume and value to reveal inflation effects
-* DAX measures in Power BI: `SAMEPERIODLASTYEAR`, `CALCULATE`, `ALLSELECTED` for time intelligence
+* DAX measures in Power BI
+* Power BI relationships and filter propagation
 * Jupyter notebook narrative — code and commentary structured for a non-technical reader
+* SQL-driven Python visualisation
+* Exploratory data analysis and anomaly detection
 
 ---
 
@@ -294,9 +303,9 @@ Data is © Crown copyright and database right. Released under the [Open Governme
 <div align="center">
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-fakeyetami-0A66C2?style=for-the-badge\&logo=linkedin\&logoColor=white)](https://linkedin.com/in/fakeyetami)
- [![GitHub](https://img.shields.io/badge/GitHub-FakeyeTami-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/FakeyeTami)
- [![Portfolio](https://img.shields.io/badge/Portfolio-tamicodes.dev-4770FF?style=for-the-badge\&logo=vercel\&logoColor=white)](https://tamicodes.dev)
- [![Email](https://img.shields.io/badge/Email-fakeyetami@gmail.com-4770FF?style=for-the-badge\&logo=gmail\&logoColor=white)](mailto:fakeyetami@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-FakeyeTami-181717?style=for-the-badge\&logo=github\&logoColor=white)](https://github.com/FakeyeTami)
+[![Portfolio](https://img.shields.io/badge/Portfolio-tamicodes.dev-4770FF?style=for-the-badge\&logo=vercel\&logoColor=white)](https://tamicodes.dev)
+[![Email](https://img.shields.io/badge/Email-fakeyetami@gmail.com-4770FF?style=for-the-badge\&logo=gmail\&logoColor=white)](mailto:fakeyetami@gmail.com)
 
 </div>
 
