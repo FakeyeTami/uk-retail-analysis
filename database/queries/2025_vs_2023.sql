@@ -7,26 +7,16 @@ WITH annual_volume AS (
     JOIN retail_category c
         ON v.category_id = c.category_id
     WHERE v.category_id IN (1, 2)
-    GROUP BY year, c.category_name
-)
+      AND EXTRACT(YEAR FROM v.time_period::date) IN (2023, 2025)
+    GROUP BY year, c.category_name)
 SELECT
     current_year.category_name,
     current_year.annual_volume_index AS volume_2025,
     baseline.annual_volume_index AS volume_2023,
-    ROUND(
-    (
-        (
-            current_year.annual_volume_index - baseline.annual_volume_index
-            )
-        / baseline.annual_volume_index
-        ) * 100, 2
-    ) AS percentage_difference
+    ROUND(((current_year.annual_volume_index - baseline.annual_volume_index) / NULLIF(baseline.annual_volume_index, 0)) * 100, 2) AS percentage_difference
 FROM annual_volume AS current_year
 JOIN annual_volume AS baseline
     ON current_year.category_name = baseline.category_name
     AND baseline.year = 2023
-WHERE current_year.year = 2025;
-
-
-;
-
+WHERE current_year.year = 2025
+ORDER BY percentage_difference DESC;
